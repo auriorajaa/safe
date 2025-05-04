@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans as JakartaSans } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const jakartaSans = JakartaSans({
   variable: "--jakarta-sans",
@@ -10,7 +14,8 @@ const jakartaSans = JakartaSans({
 
 export const metadata: Metadata = {
   title: "SAFE",
-  description: "SAFE is Security Anti Fraud Executive",
+  description:
+    "SAFE (Security Anti Fraud Executive) – Advanced fraud detection and sentiment analysis solutions to safeguard transactions and evaluate headline news impact.",
 };
 
 export default function RootLayout({
@@ -19,10 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${jakartaSans.variable} jakarta-sans antialiased`}>
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${jakartaSans.variable} jakarta-sans antialiased`}>
+          <div className="relative flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Toaster />
+            <Footer />
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -1,12 +1,19 @@
+import DemoSection from "@/components/home/demo-section";
+import HeroSection from "@/components/home/hero-section";
+import HowItWorksSection from "@/components/home/how-it-works-section";
+import PricingSection from "@/components/home/pricing-section";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Button variant={"outline"} size={"lg"}>
-        Shadcn Button
-      </Button>
+    <div className="relative w-full">
+      <div className="flex flex-col">
+        <HeroSection />
+        <DemoSection />
+        {/* <HowItWorksSection /> */}
+        <PricingSection />
+      </div>
     </div>
   );
 }

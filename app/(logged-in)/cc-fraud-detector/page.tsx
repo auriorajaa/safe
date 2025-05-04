@@ -1,0 +1,231 @@
+// app/fraud-detector/credit-card/page.tsx
+"use client";
+
+import { useState } from "react";
+import { CreditCard, ShieldAlert } from "lucide-react";
+import { toast } from "sonner";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import CreditCardForm from "@/components/fraud-detector/credit-card-form";
+import DetectionResults from "@/components/fraud-detector/detection-results";
+import {
+  createDetectionSession,
+  saveCreditCardDetection,
+  saveDetectionResult,
+} from "@/app/actions/detections-actions";
+
+export default function CreditCardFraudDetection() {
+  // API response state
+  const [result, setResult] = useState<any | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  const saveToDatabase = async (formData: any, detectionResult: any) => {
+    try {
+      // Determine if transaction is fraudulent
+      const isFraud =
+        detectionResult.transaction_analysis?.prediction_label ===
+        "Fraudulent Transaction";
+
+      // Create a detection session in the database
+      const sessionResult = await createDetectionSession(
+        "CREDIT_CARD",
+        isFraud
+      );
+
+      if (!sessionResult.success) {
+        throw new Error(`Database error: ${sessionResult.message}`);
+      }
+
+      setSessionId(sessionResult.sessionId);
+
+      // Save credit card detection details
+      const cardResult = await saveCreditCardDetection(
+        sessionResult.sessionId,
+        formData
+      );
+
+      if (!cardResult.success) {
+        throw new Error(`Failed to save card details: ${cardResult.message}`);
+      }
+
+      // Save complete result data as JSON
+      const resultSaveResponse = await saveDetectionResult(
+        sessionResult.sessionId,
+        detectionResult
+      );
+
+      if (!resultSaveResponse.success) {
+        throw new Error(
+          `Failed to save detection results: ${resultSaveResponse.message}`
+        );
+      }
+
+      toast.success(
+        "Detection result saved successfully! View it in the history table on the home page.",
+        {
+          duration: 5000,
+        }
+      );
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : "Failed to save detection result",
+        {
+          duration: 5000,
+        }
+      );
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = async (formData: {
+    distance_from_home: number;
+    distance_from_last_transaction: number;
+    ratio_to_median_purchase_price: number;
+    repeat_retailer: boolean;
+    used_chip: boolean;
+    used_pin_number: boolean;
+    online_order: boolean;
+  }) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Convert boolean values to 0/1 for API
+      const apiPayload = {
+        distance_from_home: formData.distance_from_home,
+        distance_from_last_transaction: formData.distance_from_last_transaction,
+        ratio_to_median_purchase_price: formData.ratio_to_median_purchase_price,
+        repeat_retailer: formData.repeat_retailer ? 1 : 0,
+        used_chip: formData.used_chip ? 1 : 0,
+        used_pin_number: formData.used_pin_number ? 1 : 0,
+        online_order: formData.online_order ? 1 : 0,
+      };
+
+      // Call the API
+      const response = await fetch("http://3.106.121.166:5000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(apiPayload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      setResult(data);
+
+      // Show confirmation toast with preference for "No"
+      toast.custom(
+        (t) => (
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md w-full border border-gray-200">
+            <div className="mb-5">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Save detection result?
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed mt-2">
+                You can skip saving if you don't need to keep this result for
+                later.
+                <span className="block text-xs text-gray-400 mt-2">
+                  (Unsaved results will not appear in your history.)
+                </span>
+              </p>
+            </div>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => {
+                  toast.dismiss(t);
+                  toast.info("Result skipped. Not saved to database.", {
+                    duration: 3000,
+                  });
+                }}
+                className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
+                autoFocus
+              >
+                Skip saving
+              </button>
+              <button
+                onClick={() => {
+                  toast.dismiss(t);
+                  saveToDatabase(formData, data);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Yes, save it
+              </button>
+            </div>
+            <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400 flex items-center justify-between">
+              <div>
+                Auto-skipping in{" "}
+                <span className="font-semibold text-gray-500">10s</span>
+              </div>
+              <span className="text-gray-400">(Default: Skip saving)</span>
+            </div>
+          </div>
+        ),
+        {
+          duration: 10000,
+          onAutoClose: () => {
+            toast.info("Result skipped. Not saved to database (timed out)", {
+              duration: 3000,
+            });
+          },
+          position: "bottom-right",
+        }
+      );
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container mx-auto py-8 px-4 max-w-7xl">
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center mb-4">
+          <CreditCard className="text-blue-600 mr-2" size={32} />
+          <h1 className="text-3xl font-bold text-gray-900">
+            Credit Card Fraud Detection
+          </h1>
+        </div>
+        <p className="text-gray-600 max-w-3xl mx-auto">
+          Our advanced AI-powered system analyzes transaction details to detect
+          potential credit card fraud. Fill in the transaction details below to
+          assess the fraud risk level.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Input Form */}
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <ShieldAlert className="mr-2 text-blue-600" size={20} />
+              Transaction Details
+            </CardTitle>
+            <CardDescription>
+              Enter the details of the credit card transaction
+            </CardDescription>
+          </CardHeader>
+          <CreditCardForm onSubmit={handleSubmit} loading={loading} />
+        </Card>
+
+        {/* Results Area */}
+        <div className="lg:col-span-2">
+          <DetectionResults result={result} loading={loading} error={error} />
+        </div>
+      </div>
+    </div>
+  );
+}
