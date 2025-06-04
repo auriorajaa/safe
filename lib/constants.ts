@@ -37,8 +37,6 @@ export const pricingPlans: PriceType[] = [
       "Sentiment analysis from financial headline news",
       "AI chatbot assistant",
       "24/7 priority support",
-      // "Real-time alerts",
-      // "API access",
     ],
     id: "pro",
     paymentLink: isDev ? "https://buy.stripe.com/test_7sI5lAeMh3Ot77O145" : "",

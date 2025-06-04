@@ -1,6 +1,6 @@
 "use client";
 
-import { faqs, PriceType, pricingPlans } from "@/lib/constants";
+import { containerVariants, faqs, itemVariants, PriceType, pricingPlans } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import {
   ArrowRight,
@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import CTA from "../common/cta";
+import { MotionDiv, MotionSection } from "../common/motion-wrapper";
 
 type PlanFeature = {
   name: string;
@@ -233,8 +234,14 @@ export default function PricingSection() {
   const [viewComparison, setViewComparison] = useState(false);
 
   return (
-    <section className="bg-white py-16" id="pricing">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <MotionSection
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="bg-white py-16"
+      id="pricing"
+    >
+      <MotionDiv variants={itemVariants} className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-block bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
@@ -383,7 +390,7 @@ export default function PricingSection() {
 
         {/* CTA */}
         <CTA />
-      </div>
-    </section>
+      </MotionDiv>
+    </MotionSection>
   );
 }

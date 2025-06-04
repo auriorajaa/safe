@@ -5,6 +5,8 @@ import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import ErrorBoundary from "@/components/common/error-boundary";
+import Navigator from "@/components/common/navigator";
 
 const jakartaSans = JakartaSans({
   variable: "--jakarta-sans",
@@ -27,12 +29,15 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${jakartaSans.variable} jakarta-sans antialiased`}>
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Toaster />
-            <Footer />
-          </div>
+          <ErrorBoundary>
+            <Navigator />
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Toaster />
+              <Footer />
+            </div>
+          </ErrorBoundary>
         </body>
       </html>
     </ClerkProvider>

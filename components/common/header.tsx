@@ -36,7 +36,6 @@ export default function Header() {
       {/* Right Actions */}
       <div className="flex items-center gap-3">
         <SignedIn>
-          {/* CTA Button */}
           <Button
             asChild
             className="bg-blue-600 text-white hover:bg-blue-700 hover:text-white hidden lg:inline-flex"
@@ -46,7 +45,6 @@ export default function Header() {
         </SignedIn>
 
         <SignedOut>
-          {/* Sign In Button */}
           <Button
             asChild
             className="bg-blue-600 text-white hover:bg-blue-700 hover:text-white hidden lg:inline-flex"
@@ -55,7 +53,6 @@ export default function Header() {
           </Button>
         </SignedOut>
 
-        {/* Always Show PlanBadge + UserButton (when logged in) */}
         <SignedIn>
           <PlanBadge />
           <UserButton />
@@ -73,28 +70,68 @@ export default function Header() {
               align="end"
               className="w-48 flex flex-col space-y-2"
             >
-              <NavLink href="/#pricing">Pricing</NavLink>
+              {/* Pricing */}
+              <form action="/#pricing">
+                <button
+                  type="submit"
+                  className="text-left w-full px-2 py-1 hover:bg-blue-100 rounded"
+                >
+                  Pricing
+                </button>
+              </form>
+
               <SignedIn>
-                <NavLink href="/dashboard">Home</NavLink>
-                <NavLink href="/cc-fraud-detector">Credit Card Fraud</NavLink>
-                <NavLink href="/transaction-fraud-detector">
-                  Transaction Fraud
-                </NavLink>
-                <NavLink href="/financial-news">Financial News</NavLink>
-                <Button
-                  asChild
-                  className="bg-blue-600 text-white hover:bg-blue-700 hover:text-white w-full"
-                >
-                  <NavLink href="/cc-fraud-detector">Detect Fraud</NavLink>
-                </Button>
+                <form action="/dashboard">
+                  <button
+                    type="submit"
+                    className="text-left w-full px-2 py-1 hover:bg-blue-100 rounded"
+                  >
+                    Home
+                  </button>
+                </form>
+                <form action="/cc-fraud-detector">
+                  <button
+                    type="submit"
+                    className="text-left w-full px-2 py-1 hover:bg-blue-100 rounded"
+                  >
+                    Credit Card Fraud
+                  </button>
+                </form>
+                <form action="/transaction-fraud-detector">
+                  <button
+                    type="submit"
+                    className="text-left w-full px-2 py-1 hover:bg-blue-100 rounded"
+                  >
+                    Transaction Fraud
+                  </button>
+                </form>
+                <form action="/financial-news">
+                  <button
+                    type="submit"
+                    className="text-left w-full px-2 py-1 hover:bg-blue-100 rounded"
+                  >
+                    Financial News
+                  </button>
+                </form>
+                <form action="/cc-fraud-detector">
+                  <Button
+                    type="submit"
+                    className="bg-blue-600 text-white hover:bg-blue-700 w-full"
+                  >
+                    Detect Fraud
+                  </Button>
+                </form>
               </SignedIn>
+
               <SignedOut>
-                <Button
-                  asChild
-                  className="bg-blue-600 text-white hover:bg-blue-700 hover:text-white w-full"
-                >
-                  <NavLink href="/sign-in">Sign In</NavLink>
-                </Button>
+                <form action="/sign-in">
+                  <Button
+                    type="submit"
+                    className="bg-blue-600 text-white hover:bg-blue-700 w-full"
+                  >
+                    Sign In
+                  </Button>
+                </form>
               </SignedOut>
             </PopoverContent>
           </Popover>

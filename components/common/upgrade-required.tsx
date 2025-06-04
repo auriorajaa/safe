@@ -1,12 +1,14 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { MotionDiv } from "./motion-wrapper";
+import { itemVariants } from "@/lib/constants";
 
 export default function UpgradeRequired() {
   return (
-    <div className="relative min-h-[50vh]">
-      <div className="container px-8 py-16">
-        <div className="flex flex-col items-center justify-center gap-8 text-center max-w-2xl mx-auto">
+    <MotionDiv variants={itemVariants} className="relative min-h-[50vh]">
+      <MotionDiv className="container px-8 py-16">
+        <MotionDiv className="flex flex-col items-center justify-center gap-8 text-center max-w-2xl mx-auto">
           <div className="flex items-center gap-2 text-blue-600">
             <Sparkles className="w-6 h-6" />
             <span className="text-sm font-medium uppercase tracking-wider">
@@ -30,8 +32,8 @@ export default function UpgradeRequired() {
               View Pricing Plans <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>
-        </div>
-      </div>
-    </div>
+        </MotionDiv>
+      </MotionDiv>
+    </MotionDiv>
   );
 }

@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { MotionDiv } from "./motion-wrapper";
+import { itemVariants } from "@/lib/constants";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -41,7 +43,10 @@ export default function Footer() {
 
   return (
     <footer className=" pt-24 pb-8 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <MotionDiv
+        variants={itemVariants}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {/* Company Info */}
           <div className="space-y-4">
@@ -306,7 +311,7 @@ export default function Footer() {
             <ChevronUp size={16} />
           </button>
         </div>
-      </div>
+      </MotionDiv>
 
       <style jsx global>{`
         @keyframes fade-in-down {

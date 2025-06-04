@@ -1,7 +1,7 @@
 "use client";
 
+import { handleNavigationWithLoading } from "@/lib/navigation-utils";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -18,16 +18,20 @@ export default function NavLink({
   const isActive =
     pathname === href || (href !== "/" && pathname.startsWith(href));
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    handleNavigationWithLoading(e, href);
+  };
+
   return (
-    <Link
+    <a
       href={href}
+      onClick={handleClick}
       className={cn(
         "transition-colors text-sm duration-200 text-gray-500 hover:text-blue-600",
         className
-        // isActive && "text-blue-600"
       )}
     >
       {children}
-    </Link>
+    </a>
   );
 }

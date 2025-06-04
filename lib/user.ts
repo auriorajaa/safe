@@ -1,5 +1,6 @@
 import { User } from "@clerk/nextjs/server";
 import { getDbConnection } from "./db";
+import { pricingPlans } from "./constants";
 
 export async function getPriceIdForActiveUser(email: string) {
   const sql = await getDbConnection();
@@ -25,4 +26,24 @@ export async function getSubscriptionStatus(user: User) {
   );
 
   return hasSubscription;
+}
+
+export async function checkProStatus(email: string) {
+  const sql = await getDbConnection();
+  const result = await sql`SELECT status FROM users WHERE email = ${email}`;
+  return result?.[0]?.status === "active";
+}
+
+export async function isProUser(email: string) {
+  const sql = await getDbConnection();
+  const proPriceId = pricingPlans.find((p) => p.name === "Pro")?.priceId;
+
+  const result = await sql`
+    SELECT price_id FROM users 
+    WHERE email = ${email} 
+      AND status = 'active' 
+      AND price_id = ${proPriceId}
+  `;
+
+  return result.length > 0;
 }

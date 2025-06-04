@@ -1,14 +1,17 @@
 // app/fraud-detector/credit-card/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CreditCard, ShieldAlert } from "lucide-react";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
+  CardContent,
+  CardFooter,
 } from "@/components/ui/card";
 import CreditCardForm from "@/components/fraud-detector/credit-card-form";
 import DetectionResults from "@/components/fraud-detector/detection-results";
@@ -17,6 +20,7 @@ import {
   saveCreditCardDetection,
   saveDetectionResult,
 } from "@/app/actions/detections-actions";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CreditCardFraudDetection() {
   // API response state
@@ -24,6 +28,18 @@ export default function CreditCardFraudDetection() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
+
+  // Page loading state
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
+
+  // Simulate page loading on component mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPageLoading(false);
+    }, 800); // Adjust timing as needed
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const saveToDatabase = async (formData: any, detectionResult: any) => {
     try {
@@ -190,11 +206,102 @@ export default function CreditCardFraudDetection() {
     }
   };
 
+  // Skeleton loading for page
+  if (pageLoading) {
+    return (
+      <div className="container mx-auto py-8 px-4 max-w-7xl">
+        <div className="text-center mb-8">
+          <Skeleton className="h-10 w-72 mx-auto mb-4" />
+          <Skeleton className="h-6 w-full max-w-3xl mx-auto" />
+          <Skeleton className="h-6 w-full max-w-2xl mx-auto mt-2" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Input Form Skeleton */}
+          <Card className="lg:col-span-1">
+            <CardHeader>
+              <Skeleton className="h-6 w-64" />
+              <Skeleton className="h-4 w-full mt-2" />
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-40" />
+                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-3 w-full" />
+                </div>
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-40" />
+                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-3 w-full" />
+                </div>
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-40" />
+                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-3 w-full" />
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-5 w-10 rounded-full" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-5 w-10 rounded-full" />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-end pt-6">
+              <Skeleton className="h-10 w-40" />
+            </CardFooter>
+          </Card>
+
+          {/* Results Area Skeleton */}
+          <div className="lg:col-span-2">
+            <Card>
+              <CardHeader>
+                <Skeleton className="h-6 w-64" />
+                <Skeleton className="h-4 w-full mt-2" />
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col items-center justify-center py-16 text-center">
+                  <Skeleton className="h-16 w-16 rounded-full mb-4" />
+                  <Skeleton className="h-6 w-64 mb-2" />
+                  <Skeleton className="h-4 w-80" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto py-8 px-4 max-w-7xl">
-      <div className="text-center mb-8">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5 }}
+      className="container mx-auto py-8 px-4 max-w-7xl"
+    >
+      <motion.div
+        className="text-center mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
+      >
         <div className="flex items-center justify-center mb-4">
-          <CreditCard className="text-blue-600 mr-2" size={32} />
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          >
+            <CreditCard className="text-blue-600 mr-2" size={32} />
+          </motion.div>
           <h1 className="text-3xl font-bold text-gray-900">
             Credit Card Fraud Detection
           </h1>
@@ -204,28 +311,39 @@ export default function CreditCardFraudDetection() {
           potential credit card fraud. Fill in the transaction details below to
           assess the fraud risk level.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Input Form */}
-        <Card className="lg:col-span-1">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <ShieldAlert className="mr-2 text-blue-600" size={20} />
-              Transaction Details
-            </CardTitle>
-            <CardDescription>
-              Enter the details of the credit card transaction
-            </CardDescription>
-          </CardHeader>
-          <CreditCardForm onSubmit={handleSubmit} loading={loading} />
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <Card className="lg:col-span-1">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <ShieldAlert className="mr-2 text-blue-600" size={20} />
+                Transaction Details
+              </CardTitle>
+              <CardDescription>
+                Enter the details of the credit card transaction
+              </CardDescription>
+            </CardHeader>
+            <CreditCardForm onSubmit={handleSubmit} loading={loading} />
+          </Card>
+        </motion.div>
 
         {/* Results Area */}
-        <div className="lg:col-span-2">
+        <motion.div
+          className="lg:col-span-2"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
           <DetectionResults result={result} loading={loading} error={error} />
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
