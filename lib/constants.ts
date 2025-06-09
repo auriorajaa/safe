@@ -24,8 +24,12 @@ export const pricingPlans: PriceType[] = [
       "Monthly reports",
     ],
     id: "basic",
-    paymentLink: isDev ? "https://buy.stripe.com/test_dR629o7jPfxb8bS3cc" : "",
-    priceId: isDev ? "price_1RI02oQgkFzZQF2nvXMBG49i" : "",
+    paymentLink: isDev
+      ? "https://buy.stripe.com/test_dR629o7jPfxb8bS3cc"
+      : "https://buy.stripe.com/test_dR629o7jPfxb8bS3cc",
+    priceId: isDev
+      ? "price_1RI02oQgkFzZQF2nvXMBG49i"
+      : "price_1RI02oQgkFzZQF2nvXMBG49i",
   },
   {
     name: "Pro",
@@ -39,9 +43,13 @@ export const pricingPlans: PriceType[] = [
       "24/7 priority support",
     ],
     id: "pro",
-    paymentLink: isDev ? "https://buy.stripe.com/test_7sI5lAeMh3Ot77O145" : "",
+    paymentLink: isDev
+      ? "https://buy.stripe.com/test_7sI5lAeMh3Ot77O145"
+      : "https://buy.stripe.com/test_7sI5lAeMh3Ot77O145",
     popular: true,
-    priceId: isDev ? "price_1RI02oQgkFzZQF2n0OJZdLvD" : "",
+    priceId: isDev
+      ? "price_1RI02oQgkFzZQF2n0OJZdLvD"
+      : "price_1RI02oQgkFzZQF2n0OJZdLvD",
   },
 ];
 
