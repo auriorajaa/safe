@@ -7,6 +7,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import ErrorBoundary from "@/components/common/error-boundary";
 import Navigator from "@/components/common/navigator";
+import { ORIGIN_URL } from "@/lib/helpers";
 
 const jakartaSans = JakartaSans({
   variable: "--jakarta-sans",
@@ -18,6 +19,17 @@ export const metadata: Metadata = {
   title: "SAFE",
   description:
     "SAFE (Security Anti Fraud Executive) – Advanced fraud detection and sentiment analysis solutions to safeguard transactions and evaluate headline news impact.",
+  openGraph: {
+    images: [
+      {
+        url: "/opengraph-image.png",
+      },
+    ],
+  },
+  metadataBase: new URL(ORIGIN_URL),
+  alternates: {
+    canonical: ORIGIN_URL,
+  },
 };
 
 export default function RootLayout({
