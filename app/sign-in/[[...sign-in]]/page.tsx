@@ -2,7 +2,6 @@
 "use client";
 
 import { SignIn } from "@clerk/nextjs";
-import { Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 

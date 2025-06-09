@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { MotionDiv } from "./motion-wrapper";
+import { MotionDiv } from "@/components/common/motion-wrapper";
 import { itemVariants } from "@/lib/constants";
 
 export default function Footer() {

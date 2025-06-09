@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { CreditCard, ShieldAlert } from "lucide-react";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Card,
   CardHeader,

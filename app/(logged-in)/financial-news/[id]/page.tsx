@@ -11,11 +11,6 @@ import {
   Calendar,
   Clock,
   ExternalLink,
-  Share2,
-  BookmarkPlus,
-  ThumbsUp,
-  MessageSquare,
-  Eye,
   Loader2,
   UserCircle,
   Tag,
@@ -24,17 +19,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
-import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
 
 interface ArticleContent {
   title: string;

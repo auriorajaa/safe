@@ -1,6 +1,6 @@
 // components/dashboard/detection-history.tsx
 import { useState, useMemo, useEffect } from "react";
-import { DetectionRecord, DetectionSummary } from "@/lib/types";
+import { DetectionRecord } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import {
   Table,

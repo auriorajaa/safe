@@ -8,10 +8,7 @@ import {
   Shield,
   Search,
   Bell,
-  Clipboard,
-  FileText,
   User,
-  Package,
 } from "lucide-react";
 import {
   Card,

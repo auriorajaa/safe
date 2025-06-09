@@ -9,14 +9,11 @@ import { formatDistanceToNow } from "date-fns";
 import {
   Newspaper,
   TrendingUp,
-  RefreshCcw,
   Clock,
   BookOpen,
   Calendar,
-  X,
   Lock,
   AlertCircle,
-  Sparkles,
   BookUp2,
 } from "lucide-react";
 
@@ -27,9 +24,9 @@ import {
 } from "@/components/ui/tooltip";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -44,8 +41,7 @@ import { MotionDiv } from "@/components/common/motion-wrapper";
 import { containerVariants, itemVariants } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 
-import { Globe, Zap, Crown } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Globe } from "lucide-react";
 
 interface NewsArticle {
   source: {

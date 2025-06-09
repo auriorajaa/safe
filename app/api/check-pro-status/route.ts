@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { checkProStatus, isProUser } from "@/lib/user";
+import { isProUser } from "@/lib/user";
 
 export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get("email");

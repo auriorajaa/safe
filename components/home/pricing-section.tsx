@@ -11,7 +11,6 @@ import {
   CreditCard,
   BarChart,
   MessageSquare,
-  Users,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";

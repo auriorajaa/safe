@@ -18,10 +18,8 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,15 +34,11 @@ import {
 import {
   CreditCard,
   DollarSign,
-  Calendar,
   AlertCircle,
   CheckCircle,
   ArrowLeft,
-  Home,
   Repeat,
   ShieldCheck,
-  KeyRound,
-  Globe,
   Landmark,
   ArrowLeftRight,
   CircleDollarSign,
@@ -53,18 +47,12 @@ import {
   Trash2,
   Clock,
   ShieldAlert,
-  BarChart3,
-  FileSpreadsheet,
   Lock,
   AlertTriangle,
-  Shield,
   Loader2,
   MapPin,
   History,
-  Percent,
   ShoppingBag,
-  Download,
-  Share2,
   List,
 } from "lucide-react";
 import Link from "next/link";
