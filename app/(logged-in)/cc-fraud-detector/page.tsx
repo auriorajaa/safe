@@ -124,13 +124,16 @@ export default function CreditCardFraudDetection() {
       };
 
       // Call the API
-      const response = await fetch("http://3.106.121.166:5000/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(apiPayload),
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_CREDIT_CARD_FRAUD_DETECTION!,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(apiPayload),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);

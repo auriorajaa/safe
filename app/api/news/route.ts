@@ -235,6 +235,9 @@ async function fetchJakartaPostNews() {
           featuredPost.pusblised_at.replace(" ago", "")
         ),
         content: translatedTexts[translationIndex + 1] || featuredPost.headline,
+        // TAMBAHAN: Simpan teks asli untuk analisis sentiment
+        originalTitle: featuredPost.title,
+        originalDescription: featuredPost.headline,
       });
       translationIndex += 2;
     }
@@ -256,6 +259,9 @@ async function fetchJakartaPostNews() {
             post.pusblised_at.replace(" ago", "")
           ),
           content: translatedTexts[translationIndex + 1] || post.headline,
+          // TAMBAHAN: Simpan teks asli untuk analisis sentiment
+          originalTitle: post.title,
+          originalDescription: post.headline,
         });
         translationIndex += 2;
       });

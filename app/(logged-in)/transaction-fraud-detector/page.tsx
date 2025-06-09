@@ -127,11 +127,14 @@ export default function TransactionFraudDetection() {
     };
 
     try {
-      const response = await fetch("http://13.210.48.213:5000/api/v1/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(apiPayload),
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_TRANSACTION_FRAUD_DETECTION!,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(apiPayload),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`API Error: ${response.status}`);

@@ -59,6 +59,9 @@ interface NewsArticle {
   urlToImage: string | null;
   publishedAt: string;
   content: string;
+  // TAMBAHAN: Fields untuk menyimpan teks asli
+  originalTitle?: string;
+  originalDescription?: string;
 }
 
 interface SentimentAnalysisResult {
@@ -226,15 +229,23 @@ export default function NewsPage() {
     }
   };
 
-  const analyzeSentiment = async (title: string) => {
+  const analyzeSentiment = async (article: NewsArticle) => {
     setAnalyzing(true);
     setAnalysisError(null);
-    setCurrentAnalysisTitle(title);
+
+    // Gunakan originalTitle jika ada (untuk Jakarta Post), jika tidak gunakan title biasa
+    const titleToAnalyze = article.originalTitle || article.title;
+    const displayTitle = article.title; // Untuk ditampilkan di UI
+
+    setCurrentAnalysisTitle(displayTitle);
 
     try {
-      const response = await axios.post("http://192.168.193.205:5000/analyze", {
-        text: title,
-      });
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_SENTIMENT_ANALYSIS_FINANCIAL_NEWS!,
+        {
+          text: titleToAnalyze, // Menggunakan teks asli (bahasa Inggris) untuk analisis
+        }
+      );
 
       if (response.data) {
         setAnalysisResult(response.data);
@@ -246,6 +257,11 @@ export default function NewsPage() {
     } finally {
       setAnalyzing(false);
     }
+  };
+
+  // Fungsi helper untuk menentukan apakah artikel dari Jakarta Post
+  const isJakartaPostArticle = (article: NewsArticle) => {
+    return article.source.id === "jakarta-post" && article.originalTitle;
   };
 
   const closeAnalysis = () => {
@@ -307,10 +323,6 @@ export default function NewsPage() {
                       <h3 className="text-base font-semibold mb-2 text-slate-900 dark:text-white">
                         Market Impact
                       </h3>
-                      <p>
-                        <span className="font-medium">Impact Level:</span>{" "}
-                        {analysisResult.market_impact.impact_level}
-                      </p>
                       <p className="mt-1 flex items-center gap-2">
                         <span className="font-medium">Direction:</span>{" "}
                         <span
@@ -685,9 +697,7 @@ export default function NewsPage() {
                           <Button
                             size="sm"
                             className="bg-blue-600 hover:bg-blue-800 my-2"
-                            onClick={() =>
-                              analyzeSentiment(featuredArticle.title)
-                            }
+                            onClick={() => analyzeSentiment(featuredArticle)}
                           >
                             Analyze Sentiment
                           </Button>
@@ -776,7 +786,7 @@ export default function NewsPage() {
                               <Button
                                 size="sm"
                                 className="bg-blue-600 hover:bg-blue-800 my-2"
-                                onClick={() => analyzeSentiment(article.title)}
+                                onClick={() => analyzeSentiment(article)}
                               >
                                 Analyze Sentiment
                               </Button>
@@ -884,7 +894,7 @@ export default function NewsPage() {
                             <Button
                               size="sm"
                               className="bg-blue-600 hover:bg-blue-800"
-                              onClick={() => analyzeSentiment(article.title)}
+                              onClick={() => analyzeSentiment(article)}
                             >
                               Analyze Sentiment
                             </Button>
@@ -1004,7 +1014,7 @@ export default function NewsPage() {
                               <Button
                                 size="sm"
                                 className="bg-blue-600 hover:bg-blue-800"
-                                onClick={() => analyzeSentiment(article.title)}
+                                onClick={() => analyzeSentiment(article)}
                               >
                                 Analyze Sentiment
                               </Button>
@@ -1097,7 +1107,7 @@ export default function NewsPage() {
                               <Button
                                 size="sm"
                                 className="bg-blue-600 hover:bg-blue-800"
-                                onClick={() => analyzeSentiment(article.title)}
+                                onClick={() => analyzeSentiment(article)}
                               >
                                 Analyze Sentiment
                               </Button>
