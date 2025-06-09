@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "SAFE",
   description:
     "SAFE (Security Anti Fraud Executive) – Advanced fraud detection and sentiment analysis solutions to safeguard transactions and evaluate headline news impact.",
+  icons: {
+    icon: "/favicon.ico",
+  },
   openGraph: {
     images: [
       {
