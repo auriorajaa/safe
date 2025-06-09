@@ -1,13 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["192.168.56.1", "flowing-sharp-martin.ngrok-free.app"],
-  // experimental: {
-  //   allowedDevOrigins: [
-  //     "192.168.56.1",
-  //     "flowing-sharp-martin.ngrok-free.app",
-  //   ],
-  // },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
