@@ -122,14 +122,6 @@ export default function Footer() {
                   Contact Us
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm md:text-base"
-                >
-                  Blog
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -161,11 +153,11 @@ export default function Footer() {
                   className="text-blue-600 flex-shrink-0 mt-1"
                 />
                 <address className="text-gray-600 not-italic text-sm md:text-base">
-                  123 Financial District
+                  Faculty of Engineering, Universitas Indonesia
                   <br />
-                  New York, NY 10004
+                  Kampus UI, Depok 16424
                   <br />
-                  United States
+                  West Java, Indonesia
                 </address>
               </li>
             </ul>
@@ -228,27 +220,11 @@ export default function Footer() {
                   Terms of Service
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/cookie-policy"
-                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  Cookie Policy
-                </Link>
-              </li>
             </ul>
           </div>
           <div className="space-y-3">
             <h4 className="font-semibold text-gray-900">Support</h4>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/faq"
-                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  FAQ
-                </Link>
-              </li>
               <li>
                 <Link
                   href="/help-center"
@@ -263,35 +239,6 @@ export default function Footer() {
                   className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
                 >
                   Contact Support
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <h4 className="font-semibold text-gray-900">Solutions</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/fraud-detection"
-                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  Fraud Detection
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/sentiment-analysis"
-                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  Sentiment Analysis
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/enterprise-solutions"
-                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  Enterprise Solutions
                 </Link>
               </li>
             </ul>

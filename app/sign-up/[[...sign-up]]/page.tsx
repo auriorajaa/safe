@@ -15,7 +15,7 @@ export default function Page() {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6">
+    <section className="min-h-screen flex items-center justify-center">
       <div
         className={`w-full max-w-md space-y-8 transform transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -29,13 +29,13 @@ export default function Page() {
           <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
             Create Your SAFE Account
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-md">
             Join thousands who trust us for proactive fraud prevention, advanced
             analytics, and AI-powered finance.
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 backdrop-blur-sm animate-fadeInUp">
+        <div className="p-6 animate-fadeInUp">
           <SignUp
             appearance={{
               elements: {
